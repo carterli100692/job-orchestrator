@@ -1,0 +1,35 @@
+{
+  "maxParallelism": 4,
+  "jobs": [
+    {
+      "id": "customer-summary",
+      "output": "${steps.publish.output}",
+      "steps": [
+        {
+          "id": "load",
+          "input": "customer-42"
+        },
+        {
+          "id": "publish",
+          "dependsOn": ["load"],
+          "input": "value=${steps.load.output}"
+        }
+      ]
+    },
+    {
+      "id": "audit-export",
+      "output": "${steps.export.output}",
+      "steps": [
+        {
+          "id": "read",
+          "input": "audit-2026-09"
+        },
+        {
+          "id": "export",
+          "dependsOn": ["read"],
+          "input": "records=${steps.read.output}"
+        }
+      ]
+    }
+  ]
+}
